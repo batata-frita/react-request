@@ -1,8 +1,26 @@
 import React from 'react'
 import ReactRequest from './render'
 
-const SaveUser = () => {
-  return <post url="yay" />
+const SaveUser = ({ data }) => {
+  return <post url="yay" data={data} />
 }
 
-ReactRequest.render(<SaveUser />)
+class Batata extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      count: 0,
+    }
+
+    setInterval(() => {
+      console.log('UPDATING>>>>>>>>')
+      this.setState({ count: this.state.count + 1 })
+    }, 2000)
+  }
+
+  render() {
+    return <SaveUser data={{ count: this.state.count }} />
+  }
+}
+
+ReactRequest.render(<Batata />)

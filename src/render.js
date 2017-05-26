@@ -4,12 +4,11 @@
  */
 const ReactFiberReconciler = require('react-dom/lib/ReactFiberReconciler')
 
-const LOG_STEPS = true
-const log = (a, b, c) => {
-  if (LOG_STEPS) {
-    console.log(a, b, c)
-  }
+const log = (a, b, c, d) => {
+  console.log(a, b, c, d)
 }
+
+console.log('what?')
 
 const toJSON = node => {
   const props = node.props
@@ -44,10 +43,11 @@ const RequestRenderer = ReactFiberReconciler({
   // this will look familiar
 
   createInstance(type, props, rootContainerInstance, hostContext, internalInstanceHandle) {
-    if (props.toJSON) {
-      return props.toJSON(props)
-    } else {
-      return toJSON({ props })
+    log('createInstance', type, props, rootContainerInstance)
+
+    return {
+      type,
+      props,
     }
   },
 
@@ -60,12 +60,18 @@ const RequestRenderer = ReactFiberReconciler({
   },
 
   appendChild(parentInstance, child) {
-    log('appendChild', child)
-    // const index = parentInstance.children.indexOf(child);
+    log('appendChild', arguments)
+
+    parentInstance.children = parentInstance.children || []
+    parentInstance.children.push(child)
+
+    // do the request!?
+
+    // const index = parentInstance.children.indexOf(child)
     // if (index !== -1) {
-    //   parentInstance.children.splice(index, 1);
+    //   parentInstance.children.splice(index, 1)
     // }
-    // parentInstance.children.push(child);
+    // parentInstance.children.push(child)
   },
 
   removeChild(parentInstance, child) {
@@ -93,15 +99,19 @@ const RequestRenderer = ReactFiberReconciler({
   // tree.
 
   prepareUpdate(instance, type, oldProps, newProps, rootContainerInstance, hostContext) {
-    log('TODO: prepareUpdate')
-    return null
+    log('TODO: prepareUpdate', arguments)
+
+    newProps.reduce()
+
+    // return Object.keys(newProps)
+    return []
     // return diffProperties(instance, type, oldProps, newProps, rootContainerInstance, hostContext);
   },
 
   commitUpdate(instance, updatePayload, type, oldProps, newProps, internalInstanceHandle) {
     // Apply the diff to the DOM node.
     // updateProperties(instance, updatePayload, type, oldProps, newProps);
-    log('TODO: updateProperties')
+    log('commitUpdate', arguments)
   },
 
   // commitMount is called after initializeFinalChildren *if*
@@ -132,12 +142,7 @@ const RequestRenderer = ReactFiberReconciler({
   // TestRenderers.
 
   getPublicInstance(instance) {
-    log('getPublicInstance')
-    if (instance == null) {
-      return null
-    }
-    console.log(instance)
-    return instance != null && instance.props.toJSON(instance)
+    return instance
   },
 
   // the prepareForCommit and resetAfterCommit methods are necessary for any
