@@ -1,7 +1,8 @@
-import style from './index.css'
+import React from 'react'
+import ReactRequest from './render'
 
-const div = document.createElement('div')
-div.innerHTML = '<h1>Hello World</h1>'
-div.className = style.component
+const SaveUser = () => {
+  return <post url="yay" />
+}
 
-document.getElementById('root').appendChild(div)
+ReactRequest.render(<SaveUser />)

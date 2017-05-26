@@ -15,6 +15,10 @@
     "test:unit:watch": "sagui test:unit --watch"
   },
   "devDependencies": {
-    "sagui": "beta"
+    "sagui": "v9.0.0-rc.15"
+  },
+  "dependencies": {
+    "react": "16.0.0-alpha.3",
+    "react-dom": "16.0.0-alpha.3"
   }
 }
